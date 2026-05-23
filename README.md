@@ -41,7 +41,7 @@ npm run dev
 ```bash
 npm run build
 ```
-打包后会生成 `dist` 目录，直接将该目录托管至任意静态服务器（如 GitHub Pages）即可完美运行。
+打包后会生成 `docs` 目录。由于您的 GitHub Pages 已经配置为读取 `/docs` 目录，只需将生成的 `docs` 文件夹一并提交到 Git 仓库，GitHub Pages 便会自动完成发布。
 
 ## 🛠️ 技术栈说明 (Tech Stack)
 
