@@ -17,6 +17,7 @@ const fetchJsonp = (url: string): Promise<GoldPriceResponse> => {
   return new Promise((resolve, reject) => {
     const callbackName = 'jsonp_callback_' + Math.round(1000000 * Math.random());
     const script = document.createElement('script');
+    script.referrerPolicy = 'no-referrer'; // Bypass anti-hotlinking by removing Referer header
     
     // Set up the global callback function
     (window as any)[callbackName] = (data: GoldPriceResponse) => {

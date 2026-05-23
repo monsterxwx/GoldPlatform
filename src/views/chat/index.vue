@@ -127,47 +127,17 @@
     </div>
 
     <!-- Clear Confirm Modal -->
-    <div v-if="showClearConfirm" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity">
-      <div class="bg-white rounded-3xl p-6 w-full max-w-[300px] shadow-2xl flex flex-col items-center">
-        <div class="w-12 h-12 rounded-full bg-red-100 text-red-500 flex items-center justify-center mb-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line
-            x1="10"
-            x2="10"
-            y1="11"
-            y2="17"
-          /><line
-            x1="14"
-            x2="14"
-            y1="11"
-            y2="17"
-          /></svg>
-        </div>
-        <h2 class="text-lg font-bold text-gray-800 text-center mb-2">
-          清空会话记录？
-        </h2>
-        <p class="text-sm text-gray-500 text-center mb-6 leading-relaxed">
-          清空后将开启新一轮分析，当前所有聊天记录将丢失且不可恢复。
-        </p>
-        <div class="flex gap-3 w-full">
-          <button @click="showClearConfirm = false" class="flex-1 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl text-[15px] active:bg-gray-200 transition-colors">
-            取消
-          </button>
-          <button @click="confirmClearChat" class="flex-1 py-3 bg-[#ff3b30] text-white font-semibold rounded-xl shadow-sm text-[15px] active:bg-red-600 transition-colors">
-            清空
-          </button>
-        </div>
-      </div>
-    </div>
+    <ConfirmModal
+      v-model="showClearConfirm"
+      title="清空会话记录？"
+      iconType="danger"
+      confirmText="清空"
+      @confirm="confirmClearChat"
+    >
+      <template #content>
+        清空后将开启新一轮分析，当前所有聊天记录将丢失且不可恢复。
+      </template>
+    </ConfirmModal>
 
     <!-- Chat Area -->
     <main class="flex-1 overflow-y-auto p-4 space-y-4" ref="chatContainer">
@@ -306,6 +276,7 @@ import { ref, nextTick, watch, onMounted } from 'vue'
 import { useChatStore } from '@/store/modules/chat'
 import { streamChatCompletion, type ChatMessageParam } from '@/api/chat'
 import { marked } from 'marked'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 
 const chatStore = useChatStore()
 
